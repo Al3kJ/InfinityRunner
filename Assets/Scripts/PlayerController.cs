@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class PlayerController : MonoBehaviour
     bool isCrouching = false;
 
     private Rigidbody2D rb;
+
+
+
+    int points = 0;
     void Start()
     {
         startScale = transform.localScale; // skala startowa gracza
@@ -85,5 +90,17 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * length);
+    }
+
+    [SerializeField] Text pointsText;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Point")
+        {
+            points++;
+            pointsText.text = points.ToString();
+            Destroy(collision.gameObject);
+        }
     }
 }
